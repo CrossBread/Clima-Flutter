@@ -1,7 +1,9 @@
+import 'package:clima/screens/location_screen.dart';
 import 'package:clima/services/networking.dart';
 import 'package:flutter/material.dart';
 
 import 'package:clima/services/location.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 const String apiKey = '2b2b59a1bb5e55d85879a78563dfd1c5';
 
@@ -25,6 +27,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
         'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey');
 
     var weatherData = await networkHelper.getData();
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return LocationScreen();
+      // return LocationScreen(weatherData);
+    }));
   }
 
   @override
@@ -46,9 +53,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
     }
 
     return Scaffold(
-      body: Container(
-        margin: EdgeInsets.all(myMarginAsADouble ?? 30.0),
-        color: Colors.red,
+      body: Center(
+        child: SpinKitDoubleBounce(
+          color: Colors.white,
+          size: 100,
+        ),
       ),
     );
   }
